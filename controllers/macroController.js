@@ -79,10 +79,33 @@ const updateMacro = (req, res, next) => {
   });
 };
 
+const switchActived = (req, res, next) => {
+  const { id } = req.query;
+
+  Macro.findByIdAndUpdate(
+    id,
+    req.body,
+    {
+      new: true,
+    },
+  ).then((data) => {
+    res.status(200).json({
+      status: 'success',
+      data,
+    });
+  }).catch((err) => {
+    res.status(400).json({
+      status: 'error',
+      message: err,
+    });
+  });
+};
+
 module.exports = {
   deleteMacro,
   getAllMacros,
   getMacroById,
   insertMacro,
   updateMacro,
+  switchActived,
 };
